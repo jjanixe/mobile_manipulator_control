@@ -124,11 +124,11 @@ class UR5Control(object):
             print("Current key input: {}".format(key_input))
 
             if key_input == ("i" or "I"):
-                goal_pose.position.x -=  self.move_dist
+                goal_pose.position.x +=  self.move_dist
             elif key_input == ("j" or "J"):
                 goal_pose.position.y += self.move_dist
             elif key_input == ("k" or "K"):
-                goal_pose.position.x += self.move_dist
+                goal_pose.position.x -= self.move_dist
             elif key_input == ("l" or "L"):
                 goal_pose.position.y -= self.move_dist
             
@@ -152,7 +152,8 @@ class UR5Control(object):
         self.condition.release()
 
     def close(self):
-        pass
+        # return to initial pose
+        self.initialize_robot()
 
 if __name__=="__main__":
     controller = UR5Control("arm", use_keyboard=True)

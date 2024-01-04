@@ -19,7 +19,7 @@ class GripperControl(object):
                                     parity=serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE,
                                     bytesize=serial.EIGHTBITS)
         self.serial.write(b"\x09\x10\x03\xE8\x00\x03\x06\x00\x00\x00\x00\x00\x00\x73\x30")
-        data_raw = self.ser.readline()
+        data_raw = self.serial.readline()
         print(data_raw)
         data = binascii.hexlify(data_raw)
         print("Response 1 ", data)
@@ -54,7 +54,7 @@ class GripperControl(object):
 
     def open_gripper(self):
         self.serial.write(b"\x09\x10\x03\xE8\x00\x03\x06\x09\x00\x00\x00\xFF\xFF\x72\x19")
-        data_raw = self,serial.readline()
+        data_raw = self.serial.readline()
         if self.debug:
             print(data_raw)
         time.sleep(2)
@@ -66,7 +66,7 @@ class GripperControl(object):
 
         print("Current key input: {}".format(key_input))
 
-        if key_input.data in POSSIBLE_KEYS:
+        if key_input in POSSIBLE_KEYS:
             if self.gripper_state == CLOSE:
                 self.open_gripper()
             else:
