@@ -8,7 +8,8 @@ POSSIBLE_KEYS = [
 ]
 
 class HuskyControl(object):
-    def __init__(self, use_keyboard=False, debug=False, condition=None):
+    def __init__(self, use_keyboard=False, debug=False, condition=None,
+                 speed=0.1, turn=0.1):
         '''
         subscribe to keyboard input and publish to husky_velocity_controller/cmd_vel
         '''
@@ -20,8 +21,8 @@ class HuskyControl(object):
         
         self.use_keyboard = use_keyboard
 
-        self.speed = 0.1 # TODO: remove hardcoding
-        self.turn = 0.1 # TODO: remove hardcoding
+        self.speed = speed # TODO: remove hardcoding
+        self.turn = turn # TODO: remove hardcoding
 
         if self.use_keyboard:
             self.keyboard_sub = rospy.Subscriber("keyboard_input", String, callback=self.control_with_keyboard)

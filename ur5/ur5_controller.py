@@ -29,7 +29,8 @@ POSSIBLE_KEYS = [
 
 class UR5Control(object):
     def __init__(self, group_name="arm", use_keyboard=False, 
-                 display=False, debug=False, condition=None):
+                 display=False, debug=False, condition=None,
+                 move_dist=0.05, rot_dist=0.01):
         # initialize rospy node
         moveit_commander.roscpp_initialize(sys.argv)
         
@@ -41,8 +42,8 @@ class UR5Control(object):
         self.display = display
 
         self.use_keyboard = use_keyboard
-        self.move_dist = 0.05
-        self.rot_dist = 0.01
+        self.move_dist = move_dist
+        self.rot_dist = rot_dist
         
         self.debug = debug
         self.condition = condition
