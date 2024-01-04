@@ -21,10 +21,10 @@ from std_msgs.msg import String
 from moveit_commander.conversions import pose_to_list
 
 POSSIBLE_KEYS = [
-    "i", "I", "j", "J", "k", "K", "l", "L",
-    "u", "U", "o", "O",
+    "i", "j", "k", "l",
+    "u", "o",
     "[", "]",
-    "g", "G",
+    "h"
 ]
 
 class UR5Control(object):
@@ -115,7 +115,8 @@ class UR5Control(object):
         ESC for rospy shutdown
         '''
         key_input = key_input.data
-        
+        key_input = key_input.lower()
+
         self.condition.acquire()
         if key_input in POSSIBLE_KEYS:
             current_pose = self.move_group.get_current_pose().pose
@@ -123,18 +124,18 @@ class UR5Control(object):
             
             print("Current key input: {}".format(key_input))
 
-            if key_input == ("i" or "I"):
+            if key_input == "i":
                 goal_pose.position.x +=  self.move_dist
-            elif key_input == ("j" or "J"):
+            elif key_input == "j":
                 goal_pose.position.y += self.move_dist
-            elif key_input == ("k" or "K"):
+            elif key_input == "k":
                 goal_pose.position.x -= self.move_dist
-            elif key_input == ("l" or "L"):
+            elif key_input == "l":
                 goal_pose.position.y -= self.move_dist
             
-            if key_input == ("u" or "U"):
+            if key_input == "u":
                 goal_pose.position.z += self.move_dist
-            elif key_input == ("o" or "O"):
+            elif key_input == "o":
                 goal_pose.position.z -= self.move_dist
             
             if key_input == ("["):
@@ -143,11 +144,18 @@ class UR5Control(object):
             elif key_input == ("]"):
                 print("rotation not possible yet")
                 pass
+
+            if key_input == "h":
+                # return to initial pose
+                self.initialize_robot()
             
             if self.debug:        
                 print(goal_pose)
-            # publish goal pose
-            self.plan_pose_goal(goal_pose)
+            
+            if key_input is not "h":
+                # publish goal pose
+                self.plan_pose_goal(goal_pose)
+        
         self.condition.notify()
         self.condition.release()
 

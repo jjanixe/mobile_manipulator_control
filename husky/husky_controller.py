@@ -4,8 +4,7 @@ from geometry_msgs.msg  import Twist
 from nav_msgs.msg import Odometry
 
 POSSIBLE_KEYS = [
-    "w", "W", "s", "S",
-    "q", "Q", "e", "E"
+    "w", "s", "q", "e"
 ]
 
 class HuskyControl(object):
@@ -39,18 +38,18 @@ class HuskyControl(object):
     
     def control_with_keyboard(self, key_input):
         key_input = key_input.data
+        key_input = key_input.lower()
 
         self.condition.acquire()
         if key_input in POSSIBLE_KEYS:
-            key_input = key_input.lower()
-
             vel_msg = Twist()
             
             if key_input == "w":
                 vel_msg.linear.x = self.speed
             elif key_input == "s":
                 vel_msg.linear.x = -self.speed
-            elif key_input == "q":
+            
+            if key_input == "q":
                 vel_msg.angular.z = self.turn
             elif key_input == "e":
                 vel_msg.angular.z = -self.turn

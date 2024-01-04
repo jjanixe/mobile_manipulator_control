@@ -6,7 +6,7 @@ import rospy
 from std_msgs.msg import String
 
 POSSIBLE_KEYS = [
-    'g', 'G'
+    'g'
 ]
 
 CLOSE = 0
@@ -61,9 +61,10 @@ class GripperControl(object):
         self.gripper_state = RELEASE
 
     def control_with_keyboard(self, key_input):
-        self.condition.acquire()
         key_input = key_input.data
+        key_input = key_input.lower()
 
+        self.condition.acquire()
         print("Current key input: {}".format(key_input))
 
         if key_input in POSSIBLE_KEYS:
