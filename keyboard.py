@@ -8,19 +8,23 @@ from select import select
 import termios
 import tty
 
+'''
+This implementation is based on the teleop_twist_keyboard.py from the ROS package teleop_twist_keyboard.
+'''
+
 msg = """
 Reading from the keyboard and Publishing!
 ---------------------------
 Husky control:
-    - w / a / s / d : forward, left, backward, right
+    - w / s : move forward/backward
     - q / e : rotate left, rotate right
 
 UR5 control:
-    - i / j / k / l : forward, left, backward, right
-    - u / o : move up, move down
+    - i / j / k / l : move arm forward / left / backward / right
+    - u / o : move arm up / down
 
 Gripper control:
-    - g: close / release
+    - g: close / release gripper
 
 CTRL-C to quit
 """
